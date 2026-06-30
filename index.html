@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LexFamilia | Pusat Informasi Hukum Keluarga Islam</title>
+
+  <!-- Google Fonts, Font Awesome, AOS Animation -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    :root {
+      --navy: #0F172A;
+      --navy-2: #111f3f;
+      --gold: #D4AF37;
+      --gold-2: #f4d46b;
+      --white: #ffffff;
+      --soft: #f4f6fb;
+      --muted: #64748b;
+      --glass: rgba(255, 255, 255, 0.12);
+      --shadow: 0 22px 60px rgba(15, 23, 42, 0.18);
+      --radius: 28px;
+      --text: #172033;
+      --bg: #f7f8fc;
+      --card: #ffffff;
+    }
+
+    body.dark {
+      --bg: #070b16;
+      --card: #101827;
+      --text: #eef2ff;
+      --soft: #101827;
+      --muted: #aab5ca;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 34px));
+      margin: auto;
+    }
+
+    .section {
+      padding: 105px 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 18px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 999px;
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.18;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .section-title p {
+      max-width: 720px;
+      margin: auto;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    /* Loading Screen */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 20%, #293b68, var(--navy) 52%, #050814);
+      transition: opacity 0.55s ease, visibility 0.55s ease;
+    }
+
+    #loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-box {
+      text-align: center;
+      color: var(--white);
+    }
+
+    .loader-scale {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--gold), #8b6716);
+      box-shadow: 0 0 0 14px rgba(212, 175, 55, 0.12), 0 0 38px rgba(212, 175, 55, 0.55);
+      animation: pulseScale 1.2s infinite ease-in-out;
+    }
+
+    .loader-scale i {
+      font-size: 2.5rem;
+      color: var(--navy);
+    }
+
+    @keyframes pulseScale {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.09) rotate(4deg); }
+    }
+
+    /* Scroll progress */
+    .progress-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      z-index: 9998;
+      background: linear-gradient(90deg, var(--gold), var(--gold-2));
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1180px, calc(100% - 28px));
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.20);
+      transition: all 0.35s ease;
+    }
+
+    .navbar.scrolled {
+      top: 0;
+      width: 100%;
+      border-radius: 0;
+      padding: 12px max(18px, calc((100vw - 1180px) / 2));
+      background: rgba(15, 23, 42, 0.93);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(212, 175, 55, 0.72);
+      background: #fff;
+      padding: 2px;
+    }
+
+    .brand span {
+      color: var(--gold-2);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 6px;
+    }
+
+    .nav-menu a {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      box-shadow: 0 10px 26px rgba(212, 175, 55, 0.28);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.12);
+      transition: all 0.25s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--gold);
+      color: var(--navy);
+      transform: translateY(-3px) rotate(8deg);
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(212, 175, 55, 0.20), transparent 30%),
+        radial-gradient(circle at 85% 25%, rgba(244, 212, 107, 0.16), transparent 28%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.97), rgba(17, 31, 63, 0.95), rgba(2, 6, 23, 0.98));
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1), transparent 94%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 860px;
+      height: 860px;
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 50%;
+      bottom: -540px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 120px rgba(212,175,55,0.025), 0 0 0 240px rgba(212,175,55,0.018);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 42px;
+      padding-top: 90px;
+    }
+
+    .hero-badge {
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 17px;
+      margin-bottom: 25px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(212, 175, 55, 0.33);
+      backdrop-filter: blur(16px);
+      color: var(--gold-2);
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 6.4rem);
+      letter-spacing: -2.6px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: transparent;
+      background: linear-gradient(120deg, var(--gold-2), var(--gold), #fff1a8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 8px 25px rgba(212,175,55,0.16));
+    }
+
+    .hero p {
+      max-width: 690px;
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.9;
+      font-size: 1.04rem;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+      overflow: hidden;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      left: -115%;
+      width: 80%;
+      transform: skewX(-20deg);
+      background: rgba(255, 255, 255, 0.28);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 125%;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .btn-primary {
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      box-shadow: 0 18px 38px rgba(212, 175, 55, 0.28);
+    }
+
+    .btn-ghost {
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      perspective: 1000px;
+    }
+
+    .law-orb {
+      width: min(430px, 82vw);
+      aspect-ratio: 1;
+      border-radius: 42% 58% 46% 54% / 54% 40% 60% 46%;
+      background: linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: inset 0 0 55px rgba(255,255,255,0.08), 0 38px 90px rgba(0,0,0,0.34);
+      backdrop-filter: blur(18px);
+      display: grid;
+      place-items: center;
+      animation: morph 8s infinite alternate ease-in-out, float 4s infinite ease-in-out;
+      position: relative;
+    }
+
+    .law-orb::before,
+    .law-orb::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      animation: spin 18s linear infinite;
+    }
+
+    .law-orb::before {
+      inset: 28px;
+    }
+
+    .law-orb::after {
+      inset: 58px;
+      animation-direction: reverse;
+    }
+
+    .hero-logo {
+      width: 245px;
+      height: 245px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: rgba(255,255,255,0.92);
+      padding: 18px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.25), 0 0 0 12px rgba(212,175,55,0.12);
+      animation: logoGlow 2.2s ease-in-out infinite alternate;
+    }
+
+    .hero-logo-fallback {
+      display: none;
+      width: 235px;
+      height: 235px;
+      border-radius: 50%;
+      place-items: center;
+      background: linear-gradient(145deg, var(--gold), #835f12);
+      color: var(--navy);
+      font-size: 6rem;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.25), 0 0 0 12px rgba(212,175,55,0.12);
+      z-index: 3;
+    }
+
+    @keyframes morph {
+      0% { border-radius: 42% 58% 46% 54% / 54% 40% 60% 46%; }
+      100% { border-radius: 60% 40% 55% 45% / 42% 57% 43% 58%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotateX(0deg); }
+      50% { transform: translateY(-18px) rotateX(4deg); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes logoGlow {
+      from { filter: drop-shadow(0 0 10px rgba(212,175,55,0.22)); }
+      to { filter: drop-shadow(0 0 30px rgba(212,175,55,0.56)); }
+    }
+
+    .floating-icon {
+      position: absolute;
+      z-index: 4;
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      color: var(--gold-2);
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.20);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+      animation: flyLaw 7s ease-in-out infinite;
+    }
+
+    .floating-icon:nth-child(1) { top: 40px; left: 20px; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 95px; right: 22px; animation-delay: 1.2s; }
+    .floating-icon:nth-child(3) { bottom: 110px; left: 35px; animation-delay: 2s; }
+    .floating-icon:nth-child(4) { bottom: 52px; right: 64px; animation-delay: 3s; }
+
+    @keyframes flyLaw {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      35% { transform: translate(17px, -25px) rotate(12deg); }
+      70% { transform: translate(-14px, 14px) rotate(-10deg); }
+    }
+
+    .flying-symbols {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .flying-symbols span {
+      position: absolute;
+      bottom: -60px;
+      color: rgba(212, 175, 55, 0.22);
+      font-size: 1.8rem;
+      animation: riseSymbol 13s linear infinite;
+    }
+
+    .flying-symbols span:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .flying-symbols span:nth-child(2) { left: 16%; animation-delay: 2s; font-size: 2.5rem; }
+    .flying-symbols span:nth-child(3) { left: 28%; animation-delay: 5s; }
+    .flying-symbols span:nth-child(4) { left: 43%; animation-delay: 1s; font-size: 2.2rem; }
+    .flying-symbols span:nth-child(5) { left: 58%; animation-delay: 4s; }
+    .flying-symbols span:nth-child(6) { left: 72%; animation-delay: 7s; font-size: 2.7rem; }
+    .flying-symbols span:nth-child(7) { left: 86%; animation-delay: 3s; }
+    .flying-symbols span:nth-child(8) { left: 94%; animation-delay: 6s; font-size: 2.1rem; }
+
+    @keyframes riseSymbol {
+      from { transform: translateY(0) rotate(0deg); opacity: 0; }
+      12% { opacity: 1; }
+      to { transform: translateY(-116vh) rotate(360deg); opacity: 0; }
+    }
+
+    .wave {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      z-index: 5;
+      color: var(--bg);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .about-card {
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      padding: 34px;
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 100% 0%, rgba(212,175,55,0.18), transparent 30%);
+      pointer-events: none;
+    }
+
+    .about-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      color: var(--text);
+      position: relative;
+    }
+
+    .about-card p {
+      color: var(--muted);
+      line-height: 1.9;
+      position: relative;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .stat-card {
+      border-radius: 24px;
+      background: linear-gradient(145deg, var(--navy), var(--navy-2));
+      color: var(--white);
+      padding: 26px;
+      min-height: 155px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      right: -60px;
+      top: -55px;
+      background: rgba(212, 175, 55, 0.18);
+    }
+
+    .stat-card i {
+      color: var(--gold-2);
+      font-size: 1.8rem;
+      margin-bottom: 18px;
+    }
+
+    .stat-number {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--gold-2);
+    }
+
+    .stat-card p {
+      color: rgba(255,255,255,0.78);
+      font-weight: 600;
+    }
+
+    /* Materi */
+    .materi {
+      background:
+        radial-gradient(circle at 10% 20%, rgba(212,175,55,0.11), transparent 24%),
+        radial-gradient(circle at 90% 70%, rgba(15,23,42,0.08), transparent 28%);
+    }
+
+    .materi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .materi-card {
+      position: relative;
+      min-height: 285px;
+      padding: 28px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.14);
+      box-shadow: 0 20px 45px rgba(15,23,42,0.10);
+      transition: all 0.32s ease;
+    }
+
+    .materi-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.20), transparent 42%);
+      opacity: 0;
+      transition: 0.32s ease;
+    }
+
+    .materi-card::after {
+      content: attr(data-number);
+      position: absolute;
+      right: 18px;
+      bottom: -20px;
+      font-size: 7rem;
+      font-weight: 900;
+      color: rgba(212,175,55,0.10);
+      line-height: 1;
+    }
+
+    .materi-card:hover {
+      transform: translateY(-12px) rotateX(3deg);
+      box-shadow: 0 30px 70px rgba(15,23,42,0.18);
+      border-color: rgba(212, 175, 55, 0.42);
+    }
+
+    .materi-card:hover::before {
+      opacity: 1;
+    }
+
+    .materi-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      box-shadow: 0 18px 32px rgba(212,175,55,0.26);
+      font-size: 1.7rem;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .materi-card h3,
+    .materi-card p,
+    .materi-card ul {
+      position: relative;
+      z-index: 2;
+    }
+
+    .materi-card h3 {
+      margin-bottom: 13px;
+      font-size: 1.25rem;
+    }
+
+    .materi-card p,
+    .materi-card li {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.94rem;
+    }
+
+    .materi-card ul {
+      padding-left: 19px;
+    }
+
+    /* Timeline */
+    .timeline-wrap {
+      position: relative;
+      width: min(900px, 100%);
+      margin: auto;
+    }
+
+    .timeline-wrap::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: linear-gradient(var(--gold), var(--navy), var(--gold));
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 42px 42px 0;
+    }
+
+    .timeline-item:nth-child(even) {
+      margin-left: auto;
+      padding: 0 0 42px 42px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 18px;
+      right: -25px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: var(--navy);
+      box-shadow: 0 0 0 10px rgba(212,175,55,0.13), 0 15px 30px rgba(0,0,0,0.15);
+      z-index: 2;
+      animation: dotPulse 2s infinite;
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+      right: auto;
+      left: -25px;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .timeline-content {
+      padding: 24px;
+      border-radius: 24px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      transition: 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-7px);
+      border-color: rgba(212, 175, 55, 0.46);
+    }
+
+    .timeline-content h3 {
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* Gallery */
+    .gallery {
+      background: var(--soft);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .gallery-card {
+      position: relative;
+      min-height: 245px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      isolation: isolate;
+    }
+
+    .gallery-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--bg-img), linear-gradient(135deg, var(--navy), #243b6b);
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.55s ease;
+      z-index: -2;
+    }
+
+    .gallery-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.88), rgba(15,23,42,0.12));
+      z-index: -1;
+    }
+
+    .gallery-card:hover::before {
+      transform: scale(1.15) rotate(2deg);
+    }
+
+    .gallery-info {
+      height: 100%;
+      min-height: 245px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+      color: var(--white);
+    }
+
+    .gallery-info i {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(212,175,55,0.92);
+      color: var(--navy);
+      margin-bottom: 14px;
+      font-size: 1.35rem;
+    }
+
+    .gallery-info h3 {
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+    }
+
+    .gallery-info p {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.9rem;
+    }
+
+    /* Profile */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .group-photo-card,
+    .members-card {
+      background: var(--card);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(212,175,55,0.15);
+      overflow: hidden;
+    }
+
+    .group-photo-wrap {
+      position: relative;
+      min-height: 420px;
+      background: linear-gradient(135deg, var(--navy), #263e6c);
+      display: grid;
+      place-items: center;
+      color: var(--gold-2);
+    }
+
+    .group-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+    }
+
+    .group-photo-placeholder {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .group-photo-placeholder i {
+      font-size: 4.5rem;
+    }
+
+    .group-photo-caption {
+      padding: 25px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      color: var(--white);
+    }
+
+    .group-photo-caption h3 {
+      color: var(--gold-2);
+      margin-bottom: 8px;
+    }
+
+    .group-photo-caption p {
+      color: rgba(255,255,255,0.78);
+      line-height: 1.75;
+    }
+
+    .members-card {
+      padding: 28px;
+    }
+
+    .members-card h3 {
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+    }
+
+    .member-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+    }
+
+    .member {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      border-radius: 18px;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.13);
+      transition: 0.25s ease;
+    }
+
+    .member:hover {
+      transform: translateX(6px);
+      background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.05));
+    }
+
+    .member i {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: var(--navy);
+      flex: 0 0 auto;
+    }
+
+    .member strong {
+      display: block;
+      font-size: 0.94rem;
+    }
+
+    .member span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .univ-box {
+      margin-top: 22px;
+      border-radius: 22px;
+      padding: 22px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .univ-box i {
+      color: var(--gold-2);
+      font-size: 2rem;
+    }
+
+    /* FAQ */
+    .faq {
+      background:
+        linear-gradient(135deg, rgba(15,23,42,0.96), rgba(17,31,63,0.95)),
+        radial-gradient(circle at top right, rgba(212,175,55,0.3), transparent 30%);
+      color: var(--white);
+    }
+
+    .faq .section-title h2,
+    .faq .section-title p {
+      color: var(--white);
+    }
+
+    .faq-list {
+      width: min(880px, 100%);
+      margin: auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .faq-item {
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(14px);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px;
+      color: var(--white);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .faq-question i {
+      color: var(--gold-2);
+      transition: 0.25s ease;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-answer p {
+      padding: 0 22px 22px;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 240px;
+    }
+
+    .faq-item.open .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .contact-form,
+    .contact-info {
+      background: var(--card);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(212,175,55,0.15);
+      padding: 30px;
+    }
+
+    .contact-form h3,
+    .contact-info h3 {
+      font-size: 1.55rem;
+      margin-bottom: 20px;
+      color: var(--gold);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      border: 1px solid rgba(100,116,139,0.22);
+      background: var(--soft);
+      border-radius: 18px;
+      padding: 15px 16px;
+      outline: none;
+      color: var(--text);
+      font-family: inherit;
+      transition: 0.25s ease;
+    }
+
+    .form-group textarea {
+      min-height: 135px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 5px rgba(212,175,55,0.12);
+    }
+
+    .info-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.14);
+    }
+
+    .info-item i {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      color: var(--navy);
+      flex: 0 0 auto;
+    }
+
+    .info-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .info-item p,
+    .info-item a {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.93rem;
+    }
+
+    .social-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .social-list a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.06));
+      border: 1px solid rgba(212,175,55,0.18);
+      color: var(--text);
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    .social-list a:hover {
+      transform: translateY(-4px);
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 55px 0 28px;
+      background: #050814;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: "";
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      top: -260px;
+      right: -160px;
+      background: rgba(212,175,55,0.15);
+      filter: blur(3px);
+    }
+
+    .footer-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.9fr;
+      gap: 30px;
+      margin-bottom: 35px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 15px;
+    }
+
+    .footer-brand img {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px;
+      border: 2px solid var(--gold);
+    }
+
+    .footer h3 {
+      color: var(--gold-2);
+      margin-bottom: 16px;
+    }
+
+    .footer p,
+    .footer a {
+      color: rgba(255,255,255,0.72);
+      line-height: 1.8;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .copyright {
+      position: relative;
+      text-align: center;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.63);
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold), var(--gold-2));
+      box-shadow: 0 16px 30px rgba(0,0,0,0.22);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: 0.3s ease;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-6px);
+    }
+
+    /* Responsive */
+    @media (max-width: 1050px) {
+      .nav-menu {
+        position: fixed;
+        top: 78px;
+        right: 18px;
+        width: min(330px, calc(100vw - 36px));
+        padding: 18px;
+        border-radius: 28px;
+        background: rgba(15, 23, 42, 0.96);
+        display: grid;
+        gap: 8px;
+        transform: translateY(-15px) scale(0.96);
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.28s ease;
+        border: 1px solid rgba(255,255,255,0.13);
+      }
+
+      .nav-menu.show {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .hamburger {
+        display: grid;
+      }
+
+      .hero-content,
+      .about-grid,
+      .profile-grid,
+      .contact-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-badge,
+      .hero-buttons {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .materi-grid,
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .section {
+        padding: 78px 0;
+      }
+
+      .navbar {
+        top: 10px;
+        border-radius: 26px;
+      }
+
+      .brand strong {
+        display: none;
+      }
+
+      .hero-content {
+        padding-top: 110px;
+      }
+
+      .hero-visual {
+        min-height: 380px;
+      }
+
+      .law-orb {
+        width: 315px;
+      }
+
+      .hero-logo,
+      .hero-logo-fallback {
+        width: 185px;
+        height: 185px;
+      }
+
+      .materi-grid,
+      .gallery-grid,
+      .stats-grid,
+      .member-list,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-wrap::before {
+        left: 24px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 0 35px 64px;
+      }
+
+      .timeline-dot,
+      .timeline-item:nth-child(even) .timeline-dot {
+        left: 0;
+        right: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="loader-box">
+      <div class="loader-scale"><i class="fa-solid fa-scale-balanced"></i></div>
+      <h2>LexFamilia</h2>
+      <p>Memuat ruang edukasi hukum keluarga Islam...</p>
+    </div>
+  </div>
+
+  <div class="progress-line" id="progressLine"></div>
+
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="brand">
+      <img src="logo-lexfamilia.jpeg" alt="Logo LexFamilia" class="brand-logo" onerror="this.style.display='none'">
+      <strong>Lex<span>Familia</span></strong>
+    </a>
+
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#tentang" class="nav-link">Tentang</a></li>
+      <li><a href="#materi" class="nav-link">Materi</a></li>
+      <li><a href="#timeline" class="nav-link">Timeline</a></li>
+      <li><a href="#galeri" class="nav-link">Galeri</a></li>
+      <li><a href="#profil" class="nav-link">Profil Kelompok</a></li>
+      <li><a href="#faq" class="nav-link">FAQ</a></li>
+      <li><a href="#kontak" class="nav-link">Kontak</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="darkToggle" aria-label="Dark Mode"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn hamburger" id="hamburger" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="flying-symbols">
+      <span><i class="fa-solid fa-scale-balanced"></i></span>
+      <span><i class="fa-solid fa-gavel"></i></span>
+      <span><i class="fa-solid fa-book-quran"></i></span>
+      <span><i class="fa-solid fa-landmark"></i></span>
+      <span><i class="fa-solid fa-scroll"></i></span>
+      <span><i class="fa-solid fa-ring"></i></span>
+      <span><i class="fa-solid fa-users"></i></span>
+      <span><i class="fa-solid fa-child-reaching"></i></span>
+    </div>
+
+    <div class="container hero-content">
+      <div data-aos="fade-right" data-aos-duration="1000">
+        <div class="hero-badge"><i class="fa-solid fa-scale-balanced"></i> Pusat Informasi Hukum Keluarga Islam</div>
+        <h1>Hukum Keluarga <span>Islam</span></h1>
+        <p>
+          Memahami prinsip, hak dan kewajiban, serta penerapan hukum keluarga Islam berdasarkan Al-Qur'an,
+          Hadis, dan peraturan perundang-undangan di Indonesia.
+        </p>
+        <div class="hero-buttons">
+          <a href="#materi" class="btn btn-primary"><i class="fa-solid fa-book-open-reader"></i> Pelajari Sekarang</a>
+          <a href="#tentang" class="btn btn-ghost"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="floating-icon"><i class="fa-solid fa-gavel"></i></div>
+        <div class="floating-icon"><i class="fa-solid fa-book-quran"></i></div>
+        <div class="floating-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="floating-icon"><i class="fa-solid fa-landmark"></i></div>
+        <div class="law-orb" id="lawOrb">
+          <img src="logo-lexfamilia.jpeg" alt="Logo timbangan hukum" class="hero-logo" onerror="this.style.display='none'; document.querySelector('.hero-logo-fallback').style.display='grid';">
+          <div class="hero-logo-fallback"><i class="fa-solid fa-scale-balanced"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path fill="currentColor" d="M0,80 C240,140 420,10 720,70 C970,118 1160,30 1440,78 L1440,120 L0,120 Z"></path>
+    </svg>
+  </header>
+
+  <main>
+    <section class="section" id="tentang">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-building-columns"></i> Tentang Website</span>
+          <h2>Media Edukasi Hukum yang Elegan dan Mudah Dipahami</h2>
+          <p>LexFamilia dirancang untuk membantu mahasiswa dan masyarakat umum memahami dasar hukum keluarga Islam secara rapi, modern, dan informatif.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card" data-aos="fade-right">
+            <h3>LexFamilia</h3>
+            <p>
+              Website ini dibuat sebagai media edukasi mengenai Hukum Keluarga Islam. Materi disusun berdasarkan sumber hukum Islam dan peraturan yang berlaku di Indonesia agar dapat menjadi referensi pembelajaran bagi mahasiswa maupun masyarakat umum.
+            </p>
+            <br>
+            <p>
+              <strong>Tagline:</strong> "Membangun Pemahaman Hukum Keluarga Islam untuk Mewujudkan Keluarga Sakinah."
+            </p>
+          </div>
+
+          <div class="stats-grid" data-aos="fade-left">
+            <div class="stat-card">
+              <i class="fa-solid fa-users"></i>
+              <div><div class="stat-number" data-target="8">0</div><p>Anggota Kelompok</p></div>
+            </div>
+            <div class="stat-card">
+              <i class="fa-solid fa-book-open"></i>
+              <div><div class="stat-number" data-target="6">0</div><p>Topik Materi</p></div>
+            </div>
+            <div class="stat-card">
+              <i class="fa-solid fa-timeline"></i>
+              <div><div class="stat-number" data-target="6">0</div><p>Tahap Timeline</p></div>
+            </div>
+            <div class="stat-card">
+              <i class="fa-solid fa-calendar-check"></i>
+              <div><div class="stat-number" data-target="2026">0</div><p>Tahun Website</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section materi" id="materi">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-book-quran"></i> Materi</span>
+          <h2>Materi Hukum Keluarga Islam</h2>
+          <p>Materi ditampilkan dalam kartu interaktif agar pembaca lebih mudah memahami setiap pokok pembahasan.</p>
+        </div>
+
+        <div class="materi-grid">
+          <article class="materi-card" data-number="01" data-aos="fade-up">
+            <div class="materi-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <h3>Hakikat Hukum Keluarga Islam</h3>
+            <p>Penjelasan mengenai pengertian hukum keluarga Islam dan ruang lingkupnya dalam kehidupan keluarga muslim.</p>
+          </article>
+
+          <article class="materi-card" data-number="02" data-aos="fade-up" data-aos-delay="80">
+            <div class="materi-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+            <h3>Prinsip-Prinsip Dasar</h3>
+            <ul>
+              <li>Keadilan dan musyawarah</li>
+              <li>Kasih sayang dan tanggung jawab</li>
+              <li>Kesetaraan hak dan perlindungan anak</li>
+            </ul>
+          </article>
+
+          <article class="materi-card" data-number="03" data-aos="fade-up" data-aos-delay="160">
+            <div class="materi-icon"><i class="fa-solid fa-ring"></i></div>
+            <h3>Hak dan Kewajiban Suami Istri</h3>
+            <p>Materi mengenai hak istri, hak suami, kewajiban bersama, mahar, nafkah, dan pendidikan anak.</p>
+          </article>
+
+          <article class="materi-card" data-number="04" data-aos="fade-up">
+            <div class="materi-icon"><i class="fa-solid fa-house-chimney-heart"></i></div>
+            <h3>Keluarga Sakinah</h3>
+            <p>Penjelasan mengenai konsep keluarga sakinah, mawaddah, warahmah sebagai tujuan kehidupan rumah tangga Islami.</p>
+          </article>
+
+          <article class="materi-card" data-number="05" data-aos="fade-up" data-aos-delay="80">
+            <div class="materi-icon"><i class="fa-solid fa-landmark"></i></div>
+            <h3>Peraturan di Indonesia</h3>
+            <ul>
+              <li>Kompilasi Hukum Islam</li>
+              <li>UU Perkawinan</li>
+              <li>Putusan Pengadilan Agama</li>
+            </ul>
+          </article>
+
+          <article class="materi-card" data-number="06" data-aos="fade-up" data-aos-delay="160">
+            <div class="materi-icon"><i class="fa-solid fa-child-reaching"></i></div>
+            <h3>Perlindungan Anak</h3>
+            <p>Pembahasan tentang tanggung jawab orang tua, pendidikan, pemeliharaan, dan perlindungan hak anak dalam keluarga.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="timeline">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-timeline"></i> Timeline</span>
+          <h2>Alur Kehidupan Keluarga dalam Perspektif Hukum</h2>
+          <p>Timeline ini menggambarkan perjalanan keluarga mulai dari khitbah hingga penyelesaian sengketa.</p>
+        </div>
+
+        <div class="timeline-wrap">
+          <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-dot"><i class="fa-solid fa-comments"></i></div>
+            <div class="timeline-content"><h3>Khitbah</h3><p>Tahap awal menuju pernikahan dengan tetap memperhatikan nilai agama dan etika keluarga.</p></div>
+          </div>
+          <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-dot"><i class="fa-solid fa-file-signature"></i></div>
+            <div class="timeline-content"><h3>Akad Nikah</h3><p>Ikatan sah antara suami dan istri yang menjadi dasar terbentuknya keluarga.</p></div>
+          </div>
+          <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-dot"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="timeline-content"><h3>Hak dan Kewajiban</h3><p>Suami dan istri memiliki hak serta kewajiban yang harus dijalankan secara adil dan bertanggung jawab.</p></div>
+          </div>
+          <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-dot"><i class="fa-solid fa-house-user"></i></div>
+            <div class="timeline-content"><h3>Kehidupan Rumah Tangga</h3><p>Keluarga dibangun dengan kasih sayang, komunikasi, musyawarah, dan tanggung jawab bersama.</p></div>
+          </div>
+          <div class="timeline-item" data-aos="fade-right">
+            <div class="timeline-dot"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="timeline-content"><h3>Pendidikan Anak</h3><p>Orang tua memiliki tanggung jawab dalam pendidikan, pembinaan akhlak, dan perlindungan anak.</p></div>
+          </div>
+          <div class="timeline-item" data-aos="fade-left">
+            <div class="timeline-dot"><i class="fa-solid fa-gavel"></i></div>
+            <div class="timeline-content"><h3>Penyelesaian Sengketa</h3><p>Permasalahan keluarga dapat diselesaikan melalui musyawarah, mediasi, atau jalur Pengadilan Agama.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery" id="galeri">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-images"></i> Galeri</span>
+          <h2>Galeri Edukasi</h2>
+          <p>Grid responsif dengan efek zoom untuk menampilkan suasana pembelajaran hukum keluarga Islam.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-card" style="--bg-img: linear-gradient(135deg, rgba(15,23,42,.15), rgba(212,175,55,.25)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=900&q=80');" data-aos="zoom-in">
+            <div class="gallery-info"><i class="fa-solid fa-landmark"></i><h3>Pengadilan Agama</h3><p>Institusi penyelesaian perkara keluarga Islam.</p></div>
+          </div>
+          <div class="gallery-card" style="--bg-img: linear-gradient(135deg, rgba(15,23,42,.15), rgba(212,175,55,.25)), url('https://images.unsplash.com/photo-1519682577862-22b62b24e493?auto=format&fit=crop&w=900&q=80');" data-aos="zoom-in" data-aos-delay="80">
+            <div class="gallery-info"><i class="fa-solid fa-book"></i><h3>Buku Hukum</h3><p>Referensi untuk memahami dasar hukum keluarga.</p></div>
+          </div>
+          <div class="gallery-card" style="--bg-img: linear-gradient(135deg, rgba(15,23,42,.15), rgba(212,175,55,.25)), url('https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&w=900&q=80');" data-aos="zoom-in" data-aos-delay="160">
+            <div class="gallery-info"><i class="fa-solid fa-book-quran"></i><h3>Al-Qur'an</h3><p>Salah satu sumber utama hukum Islam.</p></div>
+          </div>
+          <div class="gallery-card" style="--bg-img: linear-gradient(135deg, rgba(15,23,42,.15), rgba(212,175,55,.25)), url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80');" data-aos="zoom-in">
+            <div class="gallery-info"><i class="fa-solid fa-gavel"></i><h3>Sidang</h3><p>Proses hukum yang berjalan secara formal.</p></div>
+          </div>
+          <div class="gallery-card" style="--bg-img: linear-gradient(135deg, rgba(15,23,42,.15), rgba(212,175,55,.25)), url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80');" data-aos="zoom-in" data-aos-delay="80">
+            <div class="gallery-info"><i class="fa-solid fa-ring"></i><h3>Pernikahan Islami</h3><p>Akad dan komitmen keluarga dalam Islam.</p></div>
+          </div>
+          <div class="gallery-card" style="--bg-img: linear-gradient(135deg, rgba(15,23,42,.15), rgba(212,175,55,.25)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80');" data-aos="zoom-in" data-aos-delay="160">
+            <div class="gallery-info"><i class="fa-solid fa-user-graduate"></i><h3>Diskusi Mahasiswa</h3><p>Pembelajaran aktif dan kolaboratif.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="profil">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-people-group"></i> Profil Kelompok</span>
+          <h2>Anggota Kelompok</h2>
+          <p>Tim penyusun website LexFamilia dari UIN Sunan Gunung Djati Bandung.</p>
+        </div>
+
+        <div class="profile-grid">
+          <div class="group-photo-card" data-aos="fade-right">
+            <div class="group-photo-wrap">
+              <img src="foto-kelompok.jpg" alt="Foto kelompok LexFamilia" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="group-photo-placeholder">
+                <i class="fa-solid fa-people-group"></i>
+                <h3>Foto Kelompok</h3>
+                <p>Simpan foto kelompok dengan nama <strong>foto-kelompok.jpg</strong> di folder yang sama dengan file HTML.</p>
+              </div>
+            </div>
+            <div class="group-photo-caption">
+              <h3>LexFamilia Team</h3>
+              <p>Kelompok Hukum Keluarga Islam yang menyusun media edukasi digital berbasis informasi hukum dan nilai keluarga sakinah.</p>
+            </div>
+          </div>
+
+          <div class="members-card" data-aos="fade-left">
+            <h3>ANGGOTA KELOMPOK</h3>
+            <div class="member-list">
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Abi Abdillah</strong><span>1253010118</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Haura Tri Adilah</strong><span>1253010129</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Desfita Khairin Nafisya</strong><span>1253010114</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Nayla Ayu Nurhisan</strong><span>1253010094</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Muhammad Danar Lingga Abidal</strong><span>1253010130</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Sendi Wijaya Kusuma</strong><span>1253010142</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Zalfa Laila Karlan</strong><span>1253010126</span></div></div>
+              <div class="member"><i class="fa-solid fa-user"></i><div><strong>Ramadhana</strong><span>1253010134</span></div></div>
+            </div>
+            <div class="univ-box">
+              <i class="fa-solid fa-building-columns"></i>
+              <div><strong>Universitas</strong><p>UIN Sunan Gunung Djati Bandung</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-circle-question"></i> FAQ</span>
+          <h2>Pertanyaan Umum</h2>
+          <p>Accordion interaktif untuk menjawab pertanyaan dasar seputar hukum keluarga Islam.</p>
+        </div>
+
+        <div class="faq-list" data-aos="fade-up">
+          <div class="faq-item open">
+            <button class="faq-question">Apa itu hukum keluarga Islam? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Hukum keluarga Islam adalah aturan yang mengatur hubungan keluarga muslim, seperti perkawinan, hak dan kewajiban suami istri, nafkah, pendidikan anak, dan penyelesaian sengketa keluarga.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Apa tujuan keluarga sakinah? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Tujuannya adalah membentuk keluarga yang tenteram, penuh kasih sayang, saling menghormati, dan bertanggung jawab dalam menjalankan kehidupan rumah tangga.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Apa saja hak istri? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Hak istri antara lain memperoleh mahar, nafkah, perlakuan yang baik, perlindungan, serta kesempatan untuk mendapatkan pendidikan dan penghormatan dalam keluarga.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Apa dasar hukum perkawinan? <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="faq-answer"><p>Dasar hukum perkawinan dapat merujuk pada Al-Qur'an, Hadis, Kompilasi Hukum Islam, Undang-Undang Perkawinan, dan aturan lain yang berlaku di Indonesia.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kontak">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <span class="eyebrow"><i class="fa-solid fa-envelope-open-text"></i> Kontak</span>
+          <h2>Hubungi Kami</h2>
+          <p>Informasi jurusan, kontak kelompok, dan akun Instagram anggota.</p>
+        </div>
+
+        <div class="contact-grid">
+          <form class="contact-form" id="contactForm" data-aos="fade-right">
+            <h3>Kirim Pesan</h3>
+            <div class="form-row">
+              <div class="form-group"><input type="text" placeholder="Nama" required></div>
+              <div class="form-group"><input type="email" placeholder="Email" required></div>
+            </div>
+            <div class="form-group"><input type="text" placeholder="Subjek" required></div>
+            <div class="form-group"><textarea placeholder="Pesan" required></textarea></div>
+            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan</button>
+          </form>
+
+          <div class="contact-info" data-aos="fade-left">
+            <h3>Informasi Jurusan</h3>
+            <div class="info-list">
+              <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><strong>Alamat</strong><p>Fakultas Syari'ah dan Hukum UIN Sunan Gunung Djati Bandung</p></div></div>
+              <div class="info-item"><i class="fa-solid fa-building-columns"></i><div><strong>Universitas</strong><p>UIN Sunan Gunung Djati Bandung</p></div></div>
+              <div class="info-item"><i class="fa-solid fa-phone"></i><div><strong>Nomor Kelompok</strong><p>081573783179</p></div></div>
+              <div class="info-item"><i class="fa-solid fa-envelope"></i><div><strong>Email</strong><p>abiabdillah611@gmail.com</p></div></div>
+            </div>
+
+            <div class="social-list">
+              <a href="https://instagram.com/hw_dlh" target="_blank"><i class="fa-brands fa-instagram"></i>@hw_dlh</a>
+              <a href="https://instagram.com/fitaakhrnn" target="_blank"><i class="fa-brands fa-instagram"></i>@fitaakhrnn</a>
+              <a href="https://instagram.com/abaysiuu_" target="_blank"><i class="fa-brands fa-instagram"></i>@abaysiuu_</a>
+              <a href="https://instagram.com/rama_achoyyy" target="_blank"><i class="fa-brands fa-instagram"></i>@rama_achoyyy</a>
+              <a href="https://instagram.com/linggaabdl" target="_blank"><i class="fa-brands fa-instagram"></i>@linggaabdl</a>
+              <a href="https://instagram.com/zalfaalailaa" target="_blank"><i class="fa-brands fa-instagram"></i>@zalfaalailaa</a>
+              <a href="https://instagram.com/_cloudrussell" target="_blank"><i class="fa-brands fa-instagram"></i>@_cloudrussell</a>
+              <a href="https://instagram.com/naaylaa.an" target="_blank"><i class="fa-brands fa-instagram"></i>@naaylaa.an</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="logo-lexfamilia.jpeg" alt="Logo LexFamilia" onerror="this.style.display='none'">
+            <div><h3>LexFamilia</h3><p>Pusat Informasi Hukum Keluarga Islam</p></div>
+          </div>
+          <p>Membangun pemahaman hukum keluarga Islam untuk mewujudkan keluarga sakinah.</p>
+        </div>
+        <div>
+          <h3>Navigasi</h3>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#tentang">Tentang</a>
+            <a href="#materi">Materi</a>
+            <a href="#galeri">Galeri</a>
+            <a href="#profil">Profil Kelompok</a>
+          </div>
+        </div>
+        <div>
+          <h3>Kontak</h3>
+          <p>Fakultas Syari'ah dan Hukum UIN Sunan Gunung Djati Bandung</p>
+          <p>Email: abiabdillah611@gmail.com</p>
+        </div>
+      </div>
+      <div class="copyright">© 2026 LexFamilia. Kelompok Hukum Keluarga Islam.</div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to Top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: false,
+      duration: 850,
+      easing: 'ease-out-cubic',
+      offset: 90
+    });
+
+    const loader = document.getElementById('loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => loader.classList.add('hide'), 850);
+    });
+
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('backToTop');
+    const progressLine = document.getElementById('progressLine');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section, header');
+
+    function handleScroll() {
+      const y = window.scrollY;
+      navbar.classList.toggle('scrolled', y > 60);
+      backToTop.classList.toggle('show', y > 550);
+
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
+      progressLine.style.width = `${progress}%`;
+
+      let current = 'home';
+      sections.forEach(section => {
+        const top = section.offsetTop - 160;
+        if (y >= top) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+      });
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => navMenu.classList.toggle('show'));
+    navLinks.forEach(link => link.addEventListener('click', () => navMenu.classList.remove('show')));
+
+    const darkToggle = document.getElementById('darkToggle');
+    const savedTheme = localStorage.getItem('lexfamilia-theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+      darkToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    }
+
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      darkToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+      localStorage.setItem('lexfamilia-theme', isDark ? 'dark' : 'light');
+    });
+
+    // Hero parallax mengikuti gerakan mouse
+    const lawOrb = document.getElementById('lawOrb');
+    document.querySelector('.hero').addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 22;
+      const y = (e.clientY / window.innerHeight - 0.5) * 22;
+      lawOrb.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+    });
+
+    document.querySelector('.hero').addEventListener('mouseleave', () => {
+      lawOrb.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+
+    // Counter statistik ketika bagian tentang terlihat
+    const counters = document.querySelectorAll('.stat-number');
+    let counterStarted = false;
+    const counterObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !counterStarted) {
+        counterStarted = true;
+        counters.forEach(counter => {
+          const target = Number(counter.dataset.target);
+          let value = 0;
+          const speed = target > 100 ? 35 : 80;
+          const step = Math.ceil(target / speed);
+          const run = setInterval(() => {
+            value += step;
+            if (value >= target) {
+              counter.textContent = target;
+              clearInterval(run);
+            } else {
+              counter.textContent = value;
+            }
+          }, 22);
+        });
+      }
+    }, { threshold: 0.35 });
+    counterObserver.observe(document.querySelector('#tentang'));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        document.querySelectorAll('.faq-item').forEach(faq => {
+          if (faq !== item) faq.classList.remove('open');
+        });
+        item.classList.toggle('open');
+      });
+    });
+
+    // Form pesan sederhana
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Terima kasih! Pesan kamu berhasil disiapkan. Untuk mengaktifkan pengiriman asli, hubungkan form ini ke layanan backend atau Formspree.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
